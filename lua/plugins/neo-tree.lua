@@ -20,5 +20,18 @@ return {
                 }
             }
         }
-    }
+    },
+    keys = {{
+        "<leader>e",
+        "<cmd>Neotree filesystem reveal float<CR>",
+        desc = "Neo-tree reveal (float)"
+    }, {
+        "<leader>b",
+        "<cmd>Neotree buffers toggle<CR>",
+        desc = "Neo-tree Buffers"
+    }, {
+        "<leader>g",
+        "<cmd>Neotree git_status toggle<CR>",
+        desc = "Neo-tree Git"
+    }}
 }

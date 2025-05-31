@@ -27,5 +27,26 @@ return {
 
         vim.cmd([[cab cc CodeCompanion]])
     end,
-    dependencies = {"nvim-lua/plenary.nvim", "nvim-treesitter/nvim-treesitter"}
+    dependencies = {"nvim-lua/plenary.nvim", "nvim-treesitter/nvim-treesitter"},
+    keys = {{
+        "<C-a>",
+        "<cmd>CodeCompanionActions<cr>",
+        mode = {"n", "v"},
+        desc = "CodeCompanion Actions"
+    }, {
+        "<C-c>",
+        "<cmd>CodeCompanion<cr>",
+        mode = {"n", "v"},
+        desc = "CodeCompanion"
+    }, {
+        "<C-t>",
+        "<cmd>CodeCompanionChat Toggle<cr>",
+        mode = {"n", "v"},
+        desc = "CodeCompanion Chat Toggle"
+    }, {
+        "<C-d>",
+        "<cmd>CodeCompanionCmd<cr>",
+        mode = {"n", "v"},
+        desc = "CodeCompanion Command"
+    }}
 }
