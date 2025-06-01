@@ -25,10 +25,6 @@ keymap("n", "<C-k>", "<C-w><C-k>", {
     desc = "Move focus to the upper window"
 })
 
-vim.api.nvim_set_keymap("n", "<C-z>", ":NvimTreeToggle<cr>", {
-    silent = true,
-    noremap = true
-})
 -- Workspace diagnostics trigger (requires workspace-diagnostics plugin)
 vim.api.nvim_set_keymap("n", "<C-x>", "", {
     noremap = true,
