@@ -1,12 +1,12 @@
 return {
     "nvim-lualine/lualine.nvim",
-    dependencies = {"nvim-tree/nvim-web-devicons"},
+    dependencies = { "nvim-tree/nvim-web-devicons" },
     opts = function() -- Removed unused parameters for clarity
         -- 1. Define your base Lualine options table
         local lualine_options = {
             options = {
                 icons_enabled = vim.g.have_nerd_font, -- Use your global setting
-                theme = "tokyonight", -- Or 'auto', or 'powerline_dark' as you had previously
+                theme = "tokyonight",                 -- Or 'auto', or 'powerline_dark' as you had previously
                 component_separators = {
                     left = "",
                     right = ""
@@ -29,37 +29,37 @@ return {
                 }
             },
             sections = {
-                lualine_a = {"mode"},
-                lualine_b = {"branch", "diff"}, -- Consider adding 'diagnostics' here or in lualine_x
-                lualine_c = {{
+                lualine_a = { "mode" },
+                lualine_b = { "branch", "diff" }, -- Consider adding 'diagnostics' here or in lualine_x
+                lualine_c = { {
                     "filename",
                     path = 1
-                }}, -- Ensure this is a table of components
-                lualine_x = {"diagnostics", "encoding", "fileformat", "filetype"},
-                lualine_y = {"progress"},
-                lualine_z = {"location"}
+                } }, -- Ensure this is a table of components
+                lualine_x = { "diagnostics", "encoding", "fileformat", "filetype" },
+                lualine_y = { "progress" },
+                lualine_z = { "location" }
             },
             inactive_sections = {
                 lualine_a = {},
                 lualine_b = {},
-                lualine_c = {{
+                lualine_c = { {
                     "filename",
                     path = 1
-                }},
-                lualine_x = {"location"},
+                } },
+                lualine_x = { "location" },
                 lualine_y = {},
                 lualine_z = {}
             },
             tabline = {},
             winbar = {},
             inactive_winbar = {},
-            extensions = {"nvim-tree", "toggleterm", "lazy", "trouble"} -- Add trouble here for its own extension if needed
+            extensions = { "nvim-tree", "toggleterm", "lazy", "trouble" } -- Add trouble here for its own extension if needed
         }
 
         -- 2. Define and integrate the Trouble statusline component
         local trouble = require("trouble")
         local trouble_component = trouble.statusline({ -- Renamed from 'symbols'
-            mode = "lsp_document_symbols", -- This shows document symbols. For error counts, use mode = "diagnostics"
+            mode = "lsp_document_symbols",             -- This shows document symbols. For error counts, use mode = "diagnostics"
             groups = {},
             title = false,
             filter = {
