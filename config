@@ -1,0 +1,5 @@
+shell-integration = zsh
+window-save-state = always
+theme = dark:Hardcore,light:Spring
+font-family = JetBrains Mono
+font-size = 20
