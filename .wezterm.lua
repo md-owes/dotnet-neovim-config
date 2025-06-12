@@ -103,6 +103,7 @@ wezterm.on("gui-startup", function(cmd)
 
 	-- Activate the 'Jaameah' workspace on startup
 	mux.set_active_workspace("Jaameah")
+	window_jaameah:gui_window():maximize()
 end)
 
 config.keys = {
@@ -122,6 +123,8 @@ config.skip_close_confirmation_for_processes_named = {
 	"sh",
 	"zsh",
 }
+
+config.window_close_confirmation = 'NeverPrompt'
 
 return config
 
