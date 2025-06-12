@@ -249,23 +249,19 @@ return {
 		-- You can add other tools here that you want Mason to install
 		-- for you, so that they are available from within Neovim.
 		local ensure_installed = vim.tbl_keys(servers or {})
-		vim.list_extend(
-			ensure_installed,
-			{
-				"stylua",
-				"astro-language-server",
-				"typescript-language-server",
-				"roslyn",
-				"prettier",
-				"eslint-lsp",
-				"lua-language-server",
-				"rust-analyzer",
-				"codelldb",
-				"luaformatter",
-				"pgformatter",
-				"postgrestools",
-			}
-		)
+		vim.list_extend(ensure_installed, {
+			"stylua",
+			"astro-language-server",
+			"typescript-language-server",
+			"roslyn",
+			"prettier",
+			"eslint-lsp",
+			"lua-language-server",
+			"rust-analyzer",
+			"codelldb",
+			"pgformatter",
+			"postgrestools",
+		})
 		require("mason-tool-installer").setup({
 			ensure_installed = ensure_installed,
 		})
