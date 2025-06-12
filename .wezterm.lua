@@ -32,6 +32,8 @@ wezterm.on("gui-startup", function(cmd)
 	local project_backdeploy_dir_win = "E:\\REPO\\ADO\\Jaameah\\JaameahBack\\deployment"
 	local relaxo_project_dir_win = "E:\\REPO\\ADO\\Relaxo\\relaxo"
 	local relaxo_projectdeploy_dir_win = "E:\\REPO\\ADO\\Relaxo\\relaxo\\deployment"
+	local learning_project_dir_win = "E:\\REPO\\GIT\\DataStructuresAndAlgorithms"
+	local nvim_project_dir_win = "C:\\Users\\mdowe\\AppData\\Local\\nvim"
 
 	-- Workspace 'Jaameah'
 	-- Tab 1 (JaameahFront)
@@ -41,26 +43,25 @@ wezterm.on("gui-startup", function(cmd)
 		args = default_shell_args, -- Default bash login
 	})
 	tab1_jaameah:set_title("JaameahFront")
-	wezterm.log_info("Jaameah Workspace, Tab 1 (Front) spawned, attempting CWD: " .. project_front_dir_win)
+	wezterm.log_info("Jaameah Workspace, Tab 1 (Jaameah Front) spawned, attempting CWD: " .. project_front_dir_win)
 
 	local tab2_jaameah = window_jaameah:spawn_tab({
 		cwd = project_back_dir_win,
 	})
 	tab2_jaameah:set_title("JaameahBack")
-	wezterm.log_info("Jaameah Workspace, Tab 2 (Back) spawned with args to cd to: " .. project_back_dir_win)
+	wezterm.log_info("Jaameah Workspace, Tab 2 (Jaameah Back) spawned with args to cd to: " .. project_back_dir_win)
 
 	local tab3_jaameah = window_jaameah:spawn_tab({
 		cwd = project_backdeploy_dir_win,
 	})
 	tab3_jaameah:set_title("JaameahDeploy")
+	wezterm.log_info("Jaameah Workspace, Tab 3 (Jaameah Back Deployment) spawned with args to cd to: " .. project_backdeploy_dir_win)
 
 	local tab4_jaameah = window_jaameah:spawn_tab({
 		cwd = project_back_dir_win,
 	})
 	tab4_jaameah:set_title("JaameahProd")
-	wezterm.log_info(
-		"Jaameah Workspace, Tab 3 (Back Deployment) spawned with args to cd to: " .. project_backdeploy_dir_win
-	)
+	wezterm.log_info("Jaameah Workspace, Tab 4 (Jaameah Prod) spawned with args to cd to: " .. project_back_dir_win)
 
 	-- Workspace 'ChillBuddy'
 	-- For this one, if you only need one tab, you can use its project_dir_win in cwd
@@ -77,12 +78,28 @@ wezterm.on("gui-startup", function(cmd)
 		cwd = relaxo_projectdeploy_dir_win,
 	})
 	tab2_chillbuddy:set_title("RelaxoDeploy")
+	wezterm.log_info("ChillBuddy Workspace, Tab 2 spawned, attempting CWD: " .. relaxo_projectdeploy_dir_win)
 
 	local tab3_chillbuddy = window_chillbuddy:spawn_tab({
 		cwd = relaxo_project_dir_win,
 	})
 	tab3_chillbuddy:set_title("RelaxoProd")
-	wezterm.log_info("ChillBuddy Workspace, Tab 1 spawned, attempting CWD: " .. relaxo_projectdeploy_dir_win)
+	wezterm.log_info("ChillBuddy Workspace, Tab 3 spawned, attempting CWD: " .. relaxo_project_dir_win)
+
+	-- Workspace 'Learning'
+	local tab1_learning, pane1_learning, window_learning = mux.spawn_window({
+		workspace = "Learning",
+		cwd = learning_project_dir_win,
+		args = default_shell_args,
+	})
+	tab1_learning:set_title("LearningDSAlgo")
+	wezterm.log_info("Learning Workspace, Tab 1 spawned, attempting CWD: " .. learning_project_dir_win)
+
+	local tab2_learning = window_learning:spawn_tab({
+		cwd = nvim_project_dir_win,
+	})
+	tab2_learning:set_title("NvimDirectory")
+	wezterm.log_info("Learning Workspace, Tab 2 spawned, attempting CWD: " .. nvim_project_dir_win)
 
 	-- Activate the 'Jaameah' workspace on startup
 	mux.set_active_workspace("Jaameah")
@@ -91,6 +108,7 @@ end)
 config.keys = {
 	{ key = "1", mods = "ALT", action = act.SwitchToWorkspace({ name = "Jaameah" }) },
 	{ key = "2", mods = "ALT", action = act.SwitchToWorkspace({ name = "ChillBuddy" }) },
+	{ key = "3", mods = "ALT", action = act.SwitchToWorkspace({ name = "Learning" }) },
 	{ key = "i", mods = "CTRL|SHIFT", action = act.SwitchToWorkspace }, -- This prompts for a name
 	{
 		key = "9",
