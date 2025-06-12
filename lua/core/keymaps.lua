@@ -5,6 +5,7 @@ keymap("n", "<Esc>", "<cmd>nohlsearch<CR>")
 keymap("n", "<leader>q", vim.diagnostic.setloclist, {
 	desc = "Open diagnostic [Q]uickfix list",
 })
+keymap({ "n", "v" }, "D", '"_d', { noremap = true, desc = "Delete without yanking" })
 
 -- Terminal
 keymap("t", "<Esc><Esc>", "<C-\\><C-n>", {
