@@ -71,4 +71,7 @@ return {
 	{
 		import = "plugins.nvim-dap",
 	},
+	{
+		import = "plugins.grug-far",
+	},
 }

@@ -255,6 +255,7 @@ return {
 			"typescript-language-server",
 			"roslyn",
 			"prettier",
+			"prettierd",
 			"eslint-lsp",
 			"lua-language-server",
 			"rust-analyzer",
