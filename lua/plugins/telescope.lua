@@ -210,6 +210,32 @@ return { -- Fuzzy Finder (files, lsp, etc)
 		-- do as well as how to actually do it!
 
 		local actions = require("telescope.actions")
+		local action_state = require("telescope.actions.state")
+
+		local function smart_open(prompt_bufnr)
+			local entry = action_state.get_selected_entry()
+			local path = entry.path or entry.filename
+			actions.close(prompt_bufnr)
+
+			if not path then
+				return
+			end
+
+			-- Check if file is already open in any tab
+			for _, tabnr in ipairs(vim.api.nvim_list_tabpages()) do
+				for _, win in ipairs(vim.api.nvim_tabpage_list_wins(tabnr)) do
+					local buf = vim.api.nvim_win_get_buf(win)
+					local bufname = vim.api.nvim_buf_get_name(buf)
+					if bufname == path then
+						vim.cmd("tabnext " .. vim.api.nvim_tabpage_get_number(tabnr))
+						return
+					end
+				end
+			end
+
+			-- Otherwise open in new tab
+			vim.cmd("tabnew " .. vim.fn.fnameescape(path))
+		end
 
 		-- [[ Configure Telescope ]]
 		-- See `:help telescope` and `:help telescope.setup()`
@@ -221,10 +247,10 @@ return { -- Fuzzy Finder (files, lsp, etc)
 				mappings = {
 					-- i = { ["<c-enter>"] = "to_fuzzy_refine" },
 					i = { -- Mappings for insert mode
-						["<CR>"] = actions.select_tab, -- CHANGE: Enter now opens in a new tab
+						["<CR>"] = smart_open,
 					},
 					n = { -- Mappings for normal mode
-						["<CR>"] = actions.select_tab, -- CHANGE: Enter now opens in a new tab
+						["<CR>"] = smart_open,
 					},
 				},
 			},
