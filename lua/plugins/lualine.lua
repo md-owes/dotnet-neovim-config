@@ -57,18 +57,17 @@ return {
 				lualine_c = {
 					{
 						"tabs",
-						-- This mode option controls how tab labels are displayed
-						-- 0: Filename only
-						-- 1: Relative path
-						-- 2: Absolute path
-						-- 4: Use a custom function to generate the label
-						mode = 1,
-
-						-- Limit the width of tab labels
-						-- max_length = vim.o.columns / 4,
-
-						-- Use the same color as the active statusline mode component
-						use_mode_colors = false,
+						mode = 4, -- 0 = show just tab name (usually filename), better for space
+						max_length = vim.o.columns, -- use available width
+						use_mode_colors = true, -- enable highlight for active tab
+						tabs_color = {
+							active = "lualine_a_normal", -- or define your own highlight group
+							inactive = "lualine_c_inactive",
+						},
+						fmt = function(name, context)
+							local filename = vim.fn.fnamemodify(name, ":t") -- Just the filename
+							return filename ~= "" and filename or "[No Name]"
+						end,
 					},
 				},
 				lualine_x = {},
