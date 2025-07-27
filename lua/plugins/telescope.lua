@@ -23,11 +23,17 @@ return { -- Fuzzy Finder (files, lsp, etc)
 			enabled = vim.g.have_nerd_font,
 		},
 	},
-	keys = { -- Search for LSP definitions
+	keys = {
 		{
 			"<leader>sa",
+			"<cmd>TelescopeFindAll<cr>",
+			desc = "[S]earch [A]ll Files",
+		}, -- Search for all files
+
+		{
+			"<leader>sl",
 			"<cmd>Telescope lsp_definitions<cr>",
-			desc = "[S]e[a]rch Definitions",
+			desc = "[S]earch [L]SP Definitions",
 		}, -- Search for LSP references
 		{
 			"<leader>se",
@@ -60,9 +66,9 @@ return { -- Fuzzy Finder (files, lsp, etc)
 			desc = "[S]earch [K]eymaps",
 		}, -- Search for LSP document symbols
 		{
-			"<leader>sl",
+			"<leader>sls",
 			"<cmd>Telescope lsp_document_symbols<cr>",
-			desc = "[S]earch [L]SP Symbols",
+			desc = "[S]earch [L]SP [S]ymbols",
 		}, -- Search for LSP command history
 		{
 			"<leader>sm",
