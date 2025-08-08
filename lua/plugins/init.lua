@@ -74,4 +74,7 @@ return {
 	{
 		import = "plugins.grug-far",
 	},
+	{
+		import = "plugins.supermaven",
+	},
 }
