@@ -27,12 +27,12 @@ wezterm.on("gui-startup", function(cmd)
 	local default_shell_args = { "C:\\Program Files\\Git\\usr\\bin\\bash.exe", "--login", "-i" }
 
 	-- Define your project directories (Windows paths for WezTerm's initial understanding)
-	local project_front_dir_win = "E:\\REPO\\ADO\\Jaameah\\JaameahFront"
-	local project_back_dir_win = "E:\\REPO\\ADO\\Jaameah\\JaameahBack"
-	local project_backdeploy_dir_win = "E:\\REPO\\ADO\\Jaameah\\JaameahBack\\deployment"
-	local relaxo_project_dir_win = "E:\\REPO\\ADO\\Relaxo\\relaxo"
-	local relaxo_projectdeploy_dir_win = "E:\\REPO\\ADO\\Relaxo\\relaxo\\deployment"
-	local learning_project_dir_win = "E:\\REPO\\GIT\\DataStructuresAndAlgorithms"
+	local project_front_dir_win = "C:\\REPO\\ADO\\Jaameah\\JaameahFront"
+	local project_back_dir_win = "C:\\REPO\\ADO\\Jaameah\\JaameahBack"
+	local project_backdeploy_dir_win = "C:\\REPO\\ADO\\Jaameah\\JaameahBack\\deployment"
+	local chillbuddy_project_dir_win = "C:\\REPO\\ADO\\Chillbuddy\\chillbuddy"
+	local chillbuddy_projectdeploy_dir_win = "C:\\REPO\\ADO\\Chillbuddy\\chillbuddy\\deployment"
+	local learning_project_dir_win = "C:\\REPO\\GIT\\DataStructuresAndAlgorithms"
 	local nvim_project_dir_win = "C:\\Users\\mdowe\\AppData\\Local\\nvim"
 
 	-- Workspace 'Jaameah'
@@ -68,23 +68,23 @@ wezterm.on("gui-startup", function(cmd)
 	-- or use a similar -c trick if needed.
 	local tab1_chillbuddy, pane1_chillbuddy, window_chillbuddy = mux.spawn_window({
 		workspace = "ChillBuddy",
-		cwd = relaxo_project_dir_win,
+		cwd = chillbuddy_project_dir_win,
 		args = default_shell_args,
 	})
-	tab1_chillbuddy:set_title("Relaxo")
-	wezterm.log_info("ChillBuddy Workspace, Tab 1 spawned, attempting CWD: " .. relaxo_project_dir_win)
+	tab1_chillbuddy:set_title("Chillbuddy")
+	wezterm.log_info("ChillBuddy Workspace, Tab 1 spawned, attempting CWD: " .. chillbuddy_project_dir_win)
 
 	local tab2_chillbuddy = window_chillbuddy:spawn_tab({
-		cwd = relaxo_projectdeploy_dir_win,
+		cwd = chillbuddy_projectdeploy_dir_win,
 	})
-	tab2_chillbuddy:set_title("RelaxoDeploy")
-	wezterm.log_info("ChillBuddy Workspace, Tab 2 spawned, attempting CWD: " .. relaxo_projectdeploy_dir_win)
+	tab2_chillbuddy:set_title("ChillbuddyDeploy")
+	wezterm.log_info("ChillBuddy Workspace, Tab 2 spawned, attempting CWD: " .. chillbuddy_projectdeploy_dir_win)
 
 	local tab3_chillbuddy = window_chillbuddy:spawn_tab({
-		cwd = relaxo_project_dir_win,
+		cwd = chillbuddy_project_dir_win,
 	})
-	tab3_chillbuddy:set_title("RelaxoProd")
-	wezterm.log_info("ChillBuddy Workspace, Tab 3 spawned, attempting CWD: " .. relaxo_project_dir_win)
+	tab3_chillbuddy:set_title("ChillbuddyProd")
+	wezterm.log_info("ChillBuddy Workspace, Tab 3 spawned, attempting CWD: " .. chillbuddy_project_dir_win)
 
 	-- Workspace 'Learning'
 	local tab1_learning, pane1_learning, window_learning = mux.spawn_window({
@@ -104,6 +104,11 @@ wezterm.on("gui-startup", function(cmd)
 	-- Activate the 'Jaameah' workspace on startup
 	mux.set_active_workspace("Jaameah")
 	window_jaameah:gui_window():maximize()
+end)
+
+wezterm.on("window_close", function(window, pane)
+  -- Instead of just closing the window, we perform the "QuitApplication" action.
+  wezterm.perform_action(act.QuitApplication, window, pane)
 end)
 
 config.keys = {
