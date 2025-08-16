@@ -2,12 +2,12 @@ return {
 	"ggandor/leap.nvim",
 	keys = {
 		{
-			"<leader>a",
+			"<leader>i",
 			"<Plug>(leap-forward-to)",
 			desc = "Leap forward",
 		},
 		{
-			"<leader>A",
+			"<leader>I",
 			"<Plug>(leap-backward-to)",
 			desc = "Leap backward",
 		},
