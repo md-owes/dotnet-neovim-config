@@ -27,12 +27,12 @@ wezterm.on("gui-startup", function(cmd)
 	local default_shell_args = { "C:\\Program Files\\Git\\usr\\bin\\bash.exe", "--login", "-i" }
 
 	-- Define your project directories (Windows paths for WezTerm's initial understanding)
-	local project_front_dir_win = "C:\\REPO\\ADO\\Jaameah\\JaameahFront"
-	local project_back_dir_win = "C:\\REPO\\ADO\\Jaameah\\JaameahBack"
-	local project_backdeploy_dir_win = "C:\\REPO\\ADO\\Jaameah\\JaameahBack\\deployment"
-	local chillbuddy_project_dir_win = "C:\\REPO\\ADO\\Chillbuddy\\chillbuddy"
-	local chillbuddy_projectdeploy_dir_win = "C:\\REPO\\ADO\\Chillbuddy\\chillbuddy\\deployment"
-	local learning_project_dir_win = "C:\\REPO\\GIT\\DataStructuresAndAlgorithms"
+	local project_front_dir_win = "E:\\REPO\\ADO\\Jaameah\\JaameahFront"
+	local project_back_dir_win = "E:\\REPO\\ADO\\Jaameah\\JaameahBack"
+	local project_backdeploy_dir_win = "E:\\REPO\\ADO\\Jaameah\\JaameahBack\\deployment"
+	local chillbuddy_project_dir_win = "E:\\REPO\\ADO\\Chillbuddy\\chillbuddy"
+	local chillbuddy_projectdeploy_dir_win = "E:\\REPO\\ADO\\Chillbuddy\\chillbuddy\\deployment"
+	local learning_project_dir_win = "E:\\REPO\\GIT\\DataStructuresAndAlgorithms"
 	local nvim_project_dir_win = "C:\\Users\\mdowe\\AppData\\Local\\nvim"
 
 	-- Workspace 'Jaameah'
@@ -106,11 +106,6 @@ wezterm.on("gui-startup", function(cmd)
 	window_jaameah:gui_window():maximize()
 end)
 
-wezterm.on("window_close", function(window, pane)
-  -- Instead of just closing the window, we perform the "QuitApplication" action.
-  wezterm.perform_action(act.QuitApplication, window, pane)
-end)
-
 config.keys = {
 	{ key = "1", mods = "ALT", action = act.SwitchToWorkspace({ name = "Jaameah" }) },
 	{ key = "2", mods = "ALT", action = act.SwitchToWorkspace({ name = "ChillBuddy" }) },
@@ -121,15 +116,41 @@ config.keys = {
 		mods = "ALT",
 		action = act.ShowLauncherArgs({ flags = "FUZZY|WORKSPACES" }),
 	},
-}
+	{
+    key = 'q',
+    mods = 'ALT',
+	action = wezterm.action_callback(function(window, pane)
+		local panes_to_close = {}
 
-config.skip_close_confirmation_for_processes_named = {
-	"bash",
-	"sh",
-	"zsh",
+		-- Collect all panes first
+		for _, mux_win in ipairs(mux.all_windows()) do
+		for _, tab in ipairs(mux_win:tabs()) do
+		  for _, p in ipairs(tab:panes()) do
+			table.insert(panes_to_close, p)
+		  end
+		end
+		end
+
+		-- Close panes with delays
+		for i, p in ipairs(panes_to_close) do
+		wezterm.time.call_after((i - 1) * 0.1, function()
+		  -- Send Ctrl+C first to interrupt any running command
+		  p:send_text('\003')  -- Ctrl+C
+		  wezterm.time.call_after(0.05, function()
+			p:send_text('exit\r')
+		  end)
+		end)
+		end
+
+		-- Quit application after all panes have been processed
+		local total_delay = #panes_to_close * 0.1 + 1
+		wezterm.time.call_after(total_delay, function()
+		mux.quit()
+		end)
+	end),
+  },
 }
 
 config.window_close_confirmation = 'NeverPrompt'
 
 return config
-
