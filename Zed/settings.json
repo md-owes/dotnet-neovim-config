@@ -1,32 +1,60 @@
-// Zed settings
-//
-// For information on how to configure Zed, see the Zed
-// documentation: https://zed.dev/docs/configuring-zed
-//
-// To see all of Zed's default settings without changing your
-// custom settings, run `zed: open default settings` from the
-// command palette (cmd-shift-p / ctrl-shift-p)
 {
-  "icon_theme": "Material Icon Theme",
+  "format_on_save": "off",
+  "edit_predictions": {
+    "mode": "subtle",
+    "copilot": {
+      "proxy": null,
+      "proxy_no_verify": null,
+      "enterprise_uri": null
+    },
+    "enabled_in_text_threads": false
+  },
+  "icon_theme": "VSCode Great Icons Theme",
+  "buffer_font_family": "JetBrainsMono Nerd Font",
+  "buffer_font_features": {
+    "calt": true
+  },
+  "agent": {
+    "single_file_review": false,
+    "default_model": {
+      "provider": "zed.dev",
+      "model": "claude-sonnet-4-thinking"
+    },
+    "model_parameters": [],
+    "inline_assistant_model": {
+      "provider": "google",
+      "model": "gemini-2.5-flash"
+    }
+  },
+  "base_keymap": "VSCode",
   "telemetry": {
     "metrics": false,
     "diagnostics": false
   },
-  "ui_font_size": 16,
-  "buffer_font_size": 16,
+  "vim_mode": false,
+  "ui_font_size": 20,
+  "buffer_font_size": 20,
   "theme": {
     "mode": "system",
-    "light": "One Light",
-    "dark": "One Dark Pro"
+    "light": "Fleet Light",
+    "dark": "Fleet Dark"
+  },
+  "languages": {
+    "Astro": {
+      "language_servers": ["eslint", "..."]
+    }
   },
   "terminal": {
-    "font_size": 14,
-    "font_family": "JetBrainsMono Nerd Font",
-    "shell": {
-      "with_arguments": {
-        "program": "C:\\Program Files\\Git\\usr\\bin\\bash.exe",
-        "args": ["--login"]
-      }
+    "font_size": 16,
+    "font_family": "MesloLGS NF",
+    "font_features": {
+      "calt": true
     }
+    // "shell": {
+    //   "with_arguments": {
+    //     "program": "C:\\Program Files\\Git\\usr\\bin\\bash.exe",
+    //     "args": ["--login"]
+    //   }
+    // }
   }
 }
