@@ -262,6 +262,10 @@ return {
 			"codelldb",
 			"pgformatter",
 			"postgrestools",
+			"omnisharp",
+			"tailwindcss",
+			"eslint",
+			"lua_ls",
 		})
 		require("mason-tool-installer").setup({
 			ensure_installed = ensure_installed,
