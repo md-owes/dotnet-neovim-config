@@ -34,6 +34,7 @@ wezterm.on("gui-startup", function(cmd)
 	local chillbuddy_projectdeploy_dir_win = "E:\\REPO\\ADO\\Chillbuddy\\chillbuddy\\deployment"
 	local learning_project_dir_win = "E:\\REPO\\GIT\\DataStructuresAndAlgorithms"
 	local nvim_project_dir_win = "C:\\Users\\mdowe\\AppData\\Local\\nvim"
+	local sandbox_project_dir_win = "E:\\REPO\\ADO\\Jaameah\\JaameahSandbox"
 
 	-- Workspace 'Jaameah'
 	-- Tab 1 (JaameahFront)
@@ -100,6 +101,12 @@ wezterm.on("gui-startup", function(cmd)
 	})
 	tab2_learning:set_title("NvimDirectory")
 	wezterm.log_info("Learning Workspace, Tab 2 spawned, attempting CWD: " .. nvim_project_dir_win)
+	
+	local tab3_learning = window_learning:spawn_tab({
+		cwd = sandbox_project_dir_win,
+	})
+	tab3_learning:set_title("JaameahSandbox")
+	wezterm.log_info("Learning Workspace, Tab 3 spawned, attempting CWD: " .. sandbox_project_dir_win)
 
 	-- Activate the 'Jaameah' workspace on startup
 	mux.set_active_workspace("Jaameah")
