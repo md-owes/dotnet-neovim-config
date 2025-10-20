@@ -1,0 +1,27 @@
+pane	ChillBuddy	0	0	:-	0	ASIMO-MAC.local	:/home/owes/REPO/ADO/Chillbuddy/chillbuddy	1	zsh	:
+pane	ChillBuddy	1	1	:*	0	ASIMO-MAC.local	:/home/owes/REPO/ADO/Chillbuddy/chillbuddy	1	zsh	:
+pane	ChillBuddy	2	0	:	0	ASIMO-MAC.local	:/home/owes/REPO/ADO/Chillbuddy/chillbuddy	1	zsh	:
+pane	Jaameah	0	1	:*	0	ASIMO-MAC.local	:/home/owes/REPO/ADO/Jaameah/JaameahFront	1	zsh	:
+pane	Jaameah	1	0	:	0	ASIMO-MAC.local	:/home/owes/REPO/ADO/Jaameah/JaameahFront	1	zsh	:
+pane	Jaameah	2	0	:	0	ASIMO-MAC.local	:/home/owes/REPO/ADO/Jaameah/JaameahBack	1	zsh	:
+pane	Jaameah	3	0	:	0	ASIMO-MAC.local	:/home/owes/REPO/ADO/Jaameah/JaameahBack	1	zsh	:
+pane	Jaameah	4	0	:	0	ASIMO-MAC.local	:/home/owes/REPO/ADO/Jaameah/JaameahBack/deployment	1	zsh	:
+pane	Jaameah	5	0	:-	0	ASIMO-MAC.local	:/home/owes	1	zsh	:
+pane	Learning	0	0	:	0	ASIMO-MAC.local	:/home/owes/REPO/GIT/DataStructuresAndAlgorithms	1	zsh	:
+pane	Learning	1	0	:	0	ASIMO-MAC.local	:/home/owes/.config/nvim	1	zsh	:
+pane	Learning	2	0	:-	0	ASIMO-MAC.local	:/home/owes/REPO/ADO/Jaameah/JaameahSandbox	1	zsh	:
+pane	Learning	3	1	:*	0	ASIMO-MAC.local	:/home/owes/REPO/GIT/semantic-kernel	1	zsh	:
+window	ChillBuddy	0	:Code	0	:-	cbbe,196x47,0,0,1	off
+window	ChillBuddy	1	:Misc	1	:*	cbbf,196x47,0,0,2	off
+window	ChillBuddy	2	:Deploy	0	:	cbc0,196x47,0,0,3	off
+window	Jaameah	0	:FCode	1	:*	cbc1,196x47,0,0,4	off
+window	Jaameah	1	:FTerm	0	:	cbc2,196x47,0,0,5	off
+window	Jaameah	2	:BCode	0	:	cbc3,196x47,0,0,6	off
+window	Jaameah	3	:BTerm	0	:	cbc4,196x47,0,0,7	off
+window	Jaameah	4	:Deploy	0	:	cbc5,196x47,0,0,8	off
+window	Jaameah	5	:Prod	0	:-	cbc6,196x47,0,0,9	off
+window	Learning	0	:DatastructuresAndAlgorithms	0	:	6610,196x47,0,0,11	off
+window	Learning	1	:Nvim	0	:	6611,196x47,0,0,12	off
+window	Learning	2	:JaameahSK	0	:-	6612,196x47,0,0,13	off
+window	Learning	3	:SemanticKernel	1	:*	6613,196x47,0,0,14	off
+state	Jaameah	Learning
