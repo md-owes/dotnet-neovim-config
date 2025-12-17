@@ -268,6 +268,9 @@ return {
 			"lua_ls",
 			"netcoredbg",
 			"js-debug-adapter",
+			"csharpier",
+			"dockerls",
+			"docker_compose_language_service",
 		})
 		require("mason-tool-installer").setup({
 			ensure_installed = ensure_installed,
