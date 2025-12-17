@@ -266,6 +266,8 @@ return {
 			"tailwindcss",
 			"eslint",
 			"lua_ls",
+			"netcoredbg",
+			"js-debug-adapter",
 		})
 		require("mason-tool-installer").setup({
 			ensure_installed = ensure_installed,

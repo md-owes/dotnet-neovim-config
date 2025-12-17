@@ -6,7 +6,7 @@ return {
 		local lualine_options = {
 			options = {
 				icons_enabled = vim.g.have_nerd_font, -- Use your global setting
-				theme = "tokyonight", -- Or 'auto', or 'powerline_dark' as you had previously
+				theme = "auto", -- Or 'auto', or 'powerline_dark' as you had previously
 				component_separators = {
 					left = "",
 					right = "",
