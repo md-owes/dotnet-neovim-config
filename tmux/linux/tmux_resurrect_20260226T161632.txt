@@ -1,0 +1,27 @@
+pane	ChillBuddy	0	0	:	0	nvim	:/home/owes/REPO/ADO/Chillbuddy/chillbuddy	1	nvim	:nvim
+pane	ChillBuddy	1	0	:-	0	owes@ASIMO-ARCHLINUX:~/REPO/ADO/Chillbuddy/chillbuddy	:/home/owes/REPO/ADO/Chillbuddy/chillbuddy	1	zsh	:
+pane	ChillBuddy	2	1	:*	0	owes@ASIMO-ARCHLINUX:~/REPO/ADO/Chillbuddy/chillbuddy/deployment	:/home/owes/REPO/ADO/Chillbuddy/chillbuddy/deployment	1	zsh	:
+pane	Jaameah	0	0	:	0	nvim	:/home/owes/REPO/ADO/Jaameah/JaameahFront	1	nvim	:nvim
+pane	Jaameah	1	0	:	0	owes@ASIMO-ARCHLINUX:~/REPO/ADO/Jaameah/JaameahFront	:/home/owes/REPO/ADO/Jaameah/JaameahFront	1	zsh	:
+pane	Jaameah	2	0	:-	0	nvim	:/home/owes/REPO/ADO/Jaameah/JaameahBack	1	nvim	:nvim
+pane	Jaameah	3	1	:*	0	owes@ASIMO-ARCHLINUX:~/REPO/ADO/Jaameah/JaameahBack/deployment	:/home/owes/REPO/ADO/Jaameah/JaameahBack/deployment	1	zsh	:
+pane	Jaameah	4	0	:	0	owes@ASIMO-ARCHLINUX:~/REPO/ADO/Jaameah/JaameahBack/deployment	:/home/owes/REPO/ADO/Jaameah/JaameahBack/deployment	1	zsh	:
+pane	Jaameah	5	0	:	0	owes@ASIMO-ARCHLINUX:~	:/home/owes	1	zsh	:
+pane	Learning	0	0	:	0	owes@ASIMO-ARCHLINUX:~/REPO/GIT/DataStructuresAndAlgorithms	:/home/owes/REPO/GIT/DataStructuresAndAlgorithms	1	zsh	:
+pane	Learning	1	0	:	0	nvim	:/home/owes/.config/nvim	1	nvim	:nvim
+pane	Learning	2	0	:-	0	owes@ASIMO-ARCHLINUX:~/REPO/ADO/Jaameah/JaameahSandbox/src/school-ai-assistant	:/home/owes/REPO/ADO/Jaameah/JaameahSandbox/src/school-ai-assistant	1	zsh	:
+pane	Learning	3	1	:*	0	nvim	:/home/owes/REPO/ADO/Jaameah/JaameahAI	1	nvim	:nvim
+window	ChillBuddy	0	:Code	0	:	cbbe,196x47,0,0,1	off
+window	ChillBuddy	1	:Misc	0	:-	cbbf,196x47,0,0,2	off
+window	ChillBuddy	2	:Deploy	1	:*	cbc0,196x47,0,0,3	off
+window	Jaameah	0	:FCode	0	:	cbc1,196x47,0,0,4	off
+window	Jaameah	1	:FTerm	0	:	cbc2,196x47,0,0,5	off
+window	Jaameah	2	:BCode	0	:-	cbc3,196x47,0,0,6	off
+window	Jaameah	3	:BTerm	1	:*	cbc4,196x47,0,0,7	off
+window	Jaameah	4	:Deploy	0	:	cbc5,196x47,0,0,8	off
+window	Jaameah	5	:Prod	0	:	cbc6,196x47,0,0,9	off
+window	Learning	0	:DatastructuresAndAlgorithms	0	:	660f,196x47,0,0,10	off
+window	Learning	1	:Nvim	0	:	6610,196x47,0,0,11	off
+window	Learning	2	:JaameahSK	0	:-	6611,196x47,0,0,12	off
+window	Learning	3	:JaameahAI	1	:*	6612,196x47,0,0,13	off
+state	Jaameah	Learning
