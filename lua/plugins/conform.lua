@@ -31,6 +31,7 @@ return { -- Autoformat
 			javascriptreact = { "prettierd" },
 			typescript = { "prettierd" },
 			typescriptreact = { "prettierd" },
+			python = { "ruff_format", "ruff_organize_imports" },
 			-- Conform can also run multiple formatters sequentially
 			-- python = { "isort", "black" },
 			--
@@ -40,14 +41,14 @@ return { -- Autoformat
 	},
 	keys = {
 		{
-			"<leader>f",
+			"<leader>cf",
 			function()
 				require("conform").format({
 					async = true,
 					lsp_format = "fallback",
 				})
 			end,
-			desc = "Format Buffer",
+			desc = "[C]ode [F]ormat Buffer",
 		},
 	},
 }

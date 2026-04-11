@@ -3,18 +3,18 @@ return {
 	-- Optional: you can add some keybindings
 	-- (I personally use lspsaga so check out lspsaga integration or lsp integration for a smoother experience without separate keybindings)
 	keys = {
-		{ "<leader>eg", "<cmd>EcologGoto<cr>", desc = "Go to env file" },
-		{ "<leader>ep", "<cmd>EcologPeek<cr>", desc = "Ecolog peek variable" },
-		{ "<leader>es", "<cmd>EcologSelect<cr>", desc = "Switch env file" },
+		{ "<leader>veg", "<cmd>EcologGoto<cr>", desc = "Go to env file" },
+		{ "<leader>vep", "<cmd>EcologPeek<cr>", desc = "Ecolog peek variable" },
+		{ "<leader>ves", "<cmd>EcologSelect<cr>", desc = "Switch env file" },
 	},
 	-- Lazy loading is done internally
 	lazy = false,
 	opts = {
 		integrations = {
 			-- WARNING: for both cmp integrations see readme section below
-			nvim_cmp = true, -- If you dont plan to use nvim_cmp set to false, enabled by default
+			nvim_cmp = false, -- If you dont plan to use nvim_cmp set to false, enabled by default
 			-- If you are planning to use blink cmp uncomment this line
-			-- blink_cmp = true,
+			blink_cmp = true,
 		},
 		-- true by default, enables built-in types (database_url, url, etc.)
 		types = true,

@@ -21,13 +21,10 @@ return {
         import = "plugins.mini",
     },
     {
-        import = "plugins.neo-tree",
+        import = "plugins.blink",
     },
     {
         import = "plugins.noice",
-    },
-    {
-        import = "plugins.nvim-cmp",
     },
     {
         import = "plugins.nvim-lspconfig",
@@ -40,9 +37,6 @@ return {
     },
     {
         import = "plugins.snacks",
-    },
-    {
-        import = "plugins.telescope",
     },
     {
         import = "plugins.todo-comments",

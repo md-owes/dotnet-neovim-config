@@ -66,7 +66,7 @@ return { -- Useful plugin to show you pending keybinds.
 				group = "[W]orkspace",
 			},
 			{
-				"<leader>t",
+				"<leader>T",
 				group = "[T]oggle",
 			},
 			{
@@ -77,6 +77,22 @@ return { -- Useful plugin to show you pending keybinds.
 			{
 				"<leader>u",
 				group = "[U]I / Toggles",
+			},
+			{
+				"<leader>n",
+				group = "[N]eo-tree / Avante",
+			},
+			{
+				"<leader>z",
+				group = "AI ([Z] Gemini)",
+			},
+			{
+				"<leader>x",
+				group = "Diagnostics / Trouble",
+			},
+			{
+				"gz",
+				group = "Surround",
 			},
 		},
 	},

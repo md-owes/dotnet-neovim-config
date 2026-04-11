@@ -57,16 +57,23 @@ return {
             dotnet_navigate_to_decompiled_sources = true
         }
     },
-    -- config = {function(_, opts)
-    --     require("roslyn").setup(opts)
+    config = function(_, opts)
+        vim.api.nvim_create_autocmd("LspAttach", {
+            group = vim.api.nvim_create_augroup("roslyn-lsp-attach", { clear = true }),
+            callback = function(event)
+                local client = vim.lsp.get_client_by_id(event.data.client_id)
+                if client and client.name == "roslyn" then
+                    -- Roslyn specific setup if needed
+                end
+            end,
+        })
 
-    --     -- Optional: Setup keymaps for LSP features after roslyn is configured
-    --     -- This is usually handled by your global LSP keymap setup (from Kickstart)
-    --     -- but you can add roslyn-specific ones if needed.
-    --     -- Example: vim.keymap.set("n", "<leader>lR", "<cmd>RoslynRestart<CR>", { desc = "Restart Roslyn" })
-    -- end},
-    dependencies = {"nvim-lua/plenary.nvim", -- Often a common dependency
-    "nvim-telescope/telescope.nvim" -- For commands like :Roslyn target
-    -- Mason is implicitly a dependency if you use it to install the server
-    }
+        require("roslyn").setup({
+            config = {
+                capabilities = require("blink.cmp").get_lsp_capabilities(),
+                settings = opts,
+            },
+        })
+    end,
+    dependencies = { "nvim-lua/plenary.nvim" }
 }
