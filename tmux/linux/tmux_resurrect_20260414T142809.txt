@@ -1,0 +1,31 @@
+pane	ChillBuddy	0	1	:*	1	ASIMO-ARCHLINUX	:/home/owes	1	zsh	:
+pane	ChillBuddy	1	0	:	1	ASIMO-ARCHLINUX	:/home/owes	1	zsh	:
+pane	ChillBuddy	2	0	:-	1	ASIMO-ARCHLINUX	:/home/owes	1	zsh	:
+pane	Jaameah	0	1	:*	1	ASIMO-ARCHLINUX	:/home/owes/REPO/ADO/Jaameah/JaameahFront	1	nvim	:nvim
+pane	Jaameah	1	0	:	1	ASIMO-ARCHLINUX	:/home/owes/REPO/ADO/Jaameah/JaameahFront	1	zsh	:
+pane	Jaameah	2	0	:	1	ASIMO-ARCHLINUX	:/home/owes/REPO/ADO/Jaameah/JaameahBack	1	nvim	:nvim
+pane	Jaameah	3	0	:	1	ASIMO-ARCHLINUX	:/home/owes/REPO/ADO/Jaameah/JaameahBack/deployment	1	zsh	:
+pane	Jaameah	4	0	:	1	ASIMO-ARCHLINUX	:/home/owes/REPO/ADO/Jaameah/JaameahBack/deployment	1	zsh	:
+pane	Jaameah	5	0	:	1	ASIMO-ARCHLINUX	:/home/owes/REPO/ADO/Jaameah/JaameahInstaller	1	zsh	:
+pane	Jaameah	6	0	:-	1	ASIMO-ARCHLINUX	:/home/owes	1	zsh	:
+pane	Learning	0	0	:	1	ASIMO-ARCHLINUX	:/home/owes/REPO/GIT/DataStructuresAndAlgorithms	1	zsh	:
+pane	Learning	1	0	:	1	ASIMO-ARCHLINUX	:/home/owes/.config/nvim	1	zsh	:
+pane	Learning	2	0	:	1	ASIMO-ARCHLINUX	:/home/owes/REPO/ADO/Jaameah/JaameahSandbox/src/school-ai-assistant	1	zsh	:
+pane	Learning	3	1	:*	1	ASIMO-ARCHLINUX	:/home/owes/REPO/ADO/Jaameah/JaameahAI	1	nvim	:nvim
+pane	Learning	4	0	:-	1	ASIMO-ARCHLINUX	:/home/owes/REPO/ADO/Jaameah/JaameahAI	1	zsh	:
+window	ChillBuddy	0	:Code	1	:*	b19e,229x50,0,0,1	off
+window	ChillBuddy	1	:Term	0	:	b19f,229x50,0,0,2	off
+window	ChillBuddy	2	:Deploy	0	:-	b1a0,229x50,0,0,3	off
+window	Jaameah	0	:FCode	1	:*	b1a1,229x50,0,0,4	off
+window	Jaameah	1	:FTerm	0	:	b1a2,229x50,0,0,5	off
+window	Jaameah	2	:BCode	0	:	b1a3,229x50,0,0,6	off
+window	Jaameah	3	:BTerm	0	:	b1a4,229x50,0,0,7	off
+window	Jaameah	4	:Deploy	0	:	b1a5,229x50,0,0,8	off
+window	Jaameah	5	:Installer	0	:	b1a6,229x50,0,0,9	off
+window	Jaameah	6	:Prod	0	:-	58ff,229x50,0,0,10	off
+window	Learning	0	:DatastructuresAndAlgorithms	0	:	5900,229x50,0,0,11	off
+window	Learning	1	:Nvim	0	:	5901,229x50,0,0,12	off
+window	Learning	2	:JaameahSK	0	:	5902,229x50,0,0,13	off
+window	Learning	3	:JaameahAI	1	:*	5903,229x50,0,0,14	off
+window	Learning	4	:AITerm	0	:-	5904,229x50,0,0,15	off
+state	Jaameah	Learning
