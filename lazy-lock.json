@@ -1,7 +1,8 @@
 {
   "avante.nvim": { "branch": "main", "commit": "4d18d589a759634f1d44a3b7cda6551f5d800052" },
-  "blink.cmp": { "branch": "main", "commit": "78336bc89ee5365633bcf754d93df01678b5c08f" },
-  "blink.compat": { "branch": "main", "commit": "cd2d3a040b76ad0eeab9a3bba48bc4c2b9d703bf" },
+  "blink.cmp": { "branch": "main", "commit": "7b31e1b6497be70f620bbad83a789929248697ac" },
+  "blink.compat": { "branch": "main", "commit": "1454f14a8d855a578ceeba77c62538fa1459a67c" },
+  "blink.lib": { "branch": "main", "commit": "fd9a48ebbe6ec30d5dfcc5b42c243941ccdca1aa" },
   "conform.nvim": { "branch": "master", "commit": "016802de402556da54c36bd7359b441266b01cdd" },
   "diffview.nvim": { "branch": "main", "commit": "4516612fe98ff56ae0415a259ff6361a89419b0a" },
   "ecolog.nvim": { "branch": "main", "commit": "558ddee4d7151af6a37cd40c517243b63ba493ce" },

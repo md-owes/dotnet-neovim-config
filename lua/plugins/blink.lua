@@ -1,11 +1,13 @@
 return {
 	"saghen/blink.cmp",
 	dependencies = {
+		"saghen/blink.lib",
 		"rafamadriz/friendly-snippets",
-		"avante-corp/avante.nvim",
-		{ "saghen/blink.compat", lazy = true, version = "1.*" },
+		{ "saghen/blink.compat", lazy = true, opts = {} },
 	},
-	version = "1.*",
+	build = function()
+		require("blink.cmp").build():pwait()
+	end,
 	opts = {
 		keymap = { preset = "default" },
 		appearance = {
@@ -40,6 +42,8 @@ return {
 			},
 		},
 		signature = { enabled = true },
+		completion = { documentation = { auto_show = false } },
+		fuzzy = { implementation = "rust" },
 	},
 	opts_extend = { "sources.default" },
 }
