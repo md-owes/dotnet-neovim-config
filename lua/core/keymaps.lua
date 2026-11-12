@@ -3,7 +3,7 @@ local keymap = vim.keymap.set
 -- Basic
 keymap("n", "<Esc>", "<cmd>nohlsearch<CR>")
 keymap("n", "<leader>q", vim.diagnostic.setloclist, {
-	desc = "Open diagnostic [Q]uickfix list",
+	desc = "Open diagnostic [L]ocation list",
 })
 keymap({ "n", "v" }, "D", '"_d', { noremap = true, desc = "Delete without yanking" })
 
@@ -15,11 +15,7 @@ keymap("t", "<Esc><Esc>", "<C-\\><C-n>", {
 -- Window Navigation (Normal & Terminal modes)
 local function nav(key, dir)
 	keymap({ "n", "t" }, key, function()
-		if vim.api.nvim_get_mode().mode == "t" then
-			vim.cmd.wincmd(dir)
-		else
-			vim.cmd.wincmd(dir)
-		end
+		vim.cmd.wincmd(dir)
 	end, { desc = "Move focus to the " .. dir .. " window" })
 end
 
@@ -27,16 +23,6 @@ nav("<C-h>", "h")
 nav("<C-l>", "l")
 nav("<C-j>", "j")
 nav("<C-k>", "k")
-
--- Workspace diagnostics trigger (requires workspace-diagnostics plugin)
-vim.api.nvim_set_keymap("n", "<C-x>", "", {
-	noremap = true,
-	callback = function()
-		for _, client in ipairs(vim.lsp.get_clients()) do
-			require("workspace-diagnostics").populate_workspace_diagnostics(client, 0)
-		end
-	end,
-})
 
 vim.keymap.set("n", "<leader>cp", function()
 	vim.fn.setreg("+", vim.fn.expand("%"))

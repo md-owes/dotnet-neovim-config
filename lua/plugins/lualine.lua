@@ -1,6 +1,6 @@
 return {
 	"nvim-lualine/lualine.nvim",
-	dependencies = { "nvim-tree/nvim-web-devicons" },
+	dependencies = { "folke/trouble.nvim" },
 	opts = function() -- Removed unused parameters for clarity
 		-- 1. Define your base Lualine options table
 		local lualine_options = {

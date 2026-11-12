@@ -47,11 +47,14 @@ return { -- Collection of various small independent plugins/modules
 		-- end
 
 		require("mini.sessions").setup({
-			autosave = true,
-			autorestore = true,
+			autoread = true,
+			autowrite = true,
 		})
 
 		require("mini.icons").setup()
+		-- Mock nvim-web-devicons so lualine and other plugins that only
+		-- know the devicons API keep working without the plugin installed.
+		MiniIcons.mock_nvim_web_devicons()
 		require("mini.bracketed").setup()
 
 		-- ... and there is more!

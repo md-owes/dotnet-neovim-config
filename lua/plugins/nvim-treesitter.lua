@@ -1,92 +1,73 @@
 return {
-	-- Highlight, edit, and navigate code
+	-- Install and manage Treesitter parsers and queries.
+	-- Syntax highlighting and folding are enabled through Neovim's native
+	-- Treesitter APIs in the FileType autocmd below.
 	"nvim-treesitter/nvim-treesitter",
 	build = ":TSUpdate",
-	branch = "main", -- Uses the latest rewritten branch
-	lazy = false, -- Treesitter should start immediately for optimal performance
-	config = function()
-		local ts = require("nvim-treesitter")
-		local parser_config = require("nvim-treesitter.parsers")
+	branch = "main",
+	lazy = false,
 
-		-- 1. Install desired parsers
-		-- Programmatic replacement for the old `ensure_installed` table
+	config = function()
+		-- Parsers to keep installed. `install` is a no-op for parsers that
+		-- are already installed, so this is safe to run on every startup.
 		local parsers = {
 			"bash",
 			"c",
+			"cpp",
+			"cmake",
+			"css",
+			"c_sharp",
 			"diff",
+			"dockerfile",
+			"go",
 			"html",
+			"javascript",
+			"json",
 			"lua",
 			"luadoc",
 			"markdown",
 			"markdown_inline",
+			"python",
 			"query",
+			"regex",
+			"rust",
+			"sql",
+			"toml",
+			"tsx",
+			"typescript",
+			"typst",
 			"vim",
 			"vimdoc",
-			"astro",
-			"css",
-			"c_sharp",
-			"javascript",
-			"typescript",
-			"tsx",
-			"regex",
-			"dockerfile",
-			"json",
-			"yaml",
 			"xml",
-			"toml",
-			"rust",
-			"go",
-			"typst",
-			"python",
+			"yaml",
 		}
+		require("nvim-treesitter").install(parsers)
 
-		-- Non-blocking installation check (only installs missing parsers)
-		vim.schedule(function()
-			local install = require("nvim-treesitter.install")
-			local installed = ts.get_installed()
-			local installed_map = {}
-			for _, p in ipairs(installed) do
-				installed_map[p] = true
-			end
-
-			for _, parser in ipairs(parsers) do
-				if not installed_map[parser] then
-					install.install(parser)
-				end
-			end
-		end)
-
-		-- 2. Enable syntax highlighting and folding
-		-- Using Neovim's native Treesitter APIs
+		-- Enable native Treesitter highlighting and folding for buffers
+		-- that have an installed parser.
 		vim.api.nvim_create_autocmd("FileType", {
-			group = vim.api.nvim_create_augroup("nvim-treesitter-setup", { clear = true }),
+			group = vim.api.nvim_create_augroup("nvim-treesitter-native", { clear = true }),
 			callback = function(args)
 				local buf = args.buf
 				if not vim.api.nvim_buf_is_valid(buf) then
 					return
 				end
 
-				-- Skip special buffers (like snacks_notif, prompt, etc.)
+				-- Skip special buffers (terminal, quickfix, popups, etc.).
 				if vim.bo[buf].buftype ~= "" then
 					return
 				end
 
-				-- Ensure there is a parser for the current filetype
 				local ft = vim.bo[buf].filetype
 				if ft == "" or not vim.treesitter.language.get_lang(ft) then
 					return
 				end
 
-				-- Start highlighting (wrapped in pcall to be safe)
-				local ok = pcall(vim.treesitter.start, buf)
-				if not ok then
-					return
+				if pcall(vim.treesitter.start, buf) then
+					vim.wo.foldmethod = "expr"
+					vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+					vim.wo.foldlevel = 99
 				end
-
-				-- Enable Treesitter-based folding
-				vim.wo.foldmethod = "expr"
-				vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-				vim.wo.foldlevel = 99 -- Open all folds by default
 			end,
 		})
 	end,

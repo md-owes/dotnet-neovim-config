@@ -1,5 +1,5 @@
 return {
-	"yetone/avante.nvim",
+	"avante-corp/avante.nvim",
 	-- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
 	-- ⚠️ must add this setting! ! !
 	build = vim.fn.has("win32") ~= 0 and "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false"
@@ -7,42 +7,33 @@ return {
 	event = "VeryLazy",
 	version = false, -- Never set this value to "*"! Never!
 	---@module 'avante'
-	---@type avante.Config
 	opts = {
 		-- Basic provider configuration (valid options only)
-		provider = "openrouterv1",
+		provider = "positionapi",
 
 		providers = {
-			openrouterv1 = {
+			positionapi = {
 				__inherited_from = "openai",
-				endpoint = "https://openrouter.ai/api/v1",
-				api_key_name = "OPENROUTERV1_API_KEY",
-				model = "minimax/minimax-m2.5:free",
-			},
-			openrouterv2 = {
-				__inherited_from = "openai",
-				endpoint = "https://openrouter.ai/api/v1",
-				api_key_name = "OPENROUTERV2_API_KEY",
-				model = "nvidia/nemotron-3-super-120b-a12b:free",
-			},
-			openrouterv3 = {
-				__inherited_from = "openai",
-				endpoint = "https://openrouter.ai/api/v1",
-				api_key_name = "OPENROUTERV3_API_KEY",
-				model = "z-ai/glm-4.5-air:free",
-				disable_tools = true,
+				endpoint = "https://positionapi.top/v1",
+				api_key_name = "POSITION_API_KEY",
+				model = "gpt-6-astra",
+								use_response_api = true,
+								support_previous_response_id = false,
+								extra_request_body = {
+									store = false, -- Stateless Responses: full history goes in input, nothing is stored server-side
+								},
 			},
 		},
 
 		-- Recommended settings
-		hints = { enabled = true },
-		autobutton = { enabled = true },
+		selection = {
+			hint_display = "delayed",
+		},
 
 		-- Enhanced window configuration
 		windows = {
 			position = "right",
 			width = 40,
-			wrap = true,
 			sidebar_header = {
 				enabled = true,
 				align = "center",
@@ -55,5 +46,6 @@ return {
 		"nvim-lua/plenary.nvim",
 		"MunifTanjim/nui.nvim",
 		"folke/snacks.nvim",
+		{ "ColinKennedy/mega.cmdparse", dependencies = { "ColinKennedy/mega.logging" } },
 	},
 }

@@ -2,12 +2,12 @@ return {
 	"neovim/nvim-lspconfig",
 	dependencies = {
 		{
-			"williamboman/mason.nvim",
+			"mason-org/mason.nvim",
 			opts = {
 				registries = { "github:mason-org/mason-registry", "github:Crashdummyy/mason-registry" },
 			},
 		},
-		"williamboman/mason-lspconfig.nvim",
+		"mason-org/mason-lspconfig.nvim",
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
 		{ "j-hui/fidget.nvim", opts = {} },
 		"saghen/blink.cmp",
@@ -41,14 +41,14 @@ return {
 				end
 
 				-- Diagnostic jump keymaps (modern native approach)
-				map("]d", vim.diagnostic.goto_next, "Next Diagnostic")
-				map("[d", vim.diagnostic.goto_prev, "Prev Diagnostic")
+				map("]d", function() vim.diagnostic.jump({ count = 1, float = true }) end, "Next Diagnostic")
+				map("[d", function() vim.diagnostic.jump({ count = -1, float = true }) end, "Prev Diagnostic")
 			end,
 		})
 
 		-- Native diagnostic configuration
 		vim.diagnostic.config({
-			virtual_text = { prefix = "▎", spacing = 4, source = "if_nosource" },
+			virtual_text = { prefix = "▎", spacing = 4, source = "if_many" },
 			signs = true,
 			underline = true,
 			update_in_insert = false,
@@ -84,10 +84,22 @@ return {
 				},
 			},
 			ruff = {},
+			gopls = {},
+			clangd = {},
+			bashls = {},
+			html = {},
+			cssls = {},
+			jsonls = {},
+			yamlls = {},
+			taplo = {},
+			marksman = {},
+			lemminx = {},
+			tinymist = {},
 		}
 
 		-- Setup Blink-integrated capabilities
 		local capabilities = require("blink.cmp").get_lsp_capabilities()
+		---@diagnostic disable-next-line: inject-field
 		capabilities.offsetEncoding = { "utf-16" }
 
 		-- Unified server configuration
@@ -99,7 +111,7 @@ return {
 
 		-- Tools management
 		local ensure_installed = vim.tbl_keys(servers)
-		vim.list_extend(ensure_installed, { "stylua", "prettier", "prettierd", "csharpier", "debugpy" })
+		vim.list_extend(ensure_installed, { "stylua", "prettier", "prettierd", "csharpier", "debugpy", "roslyn", "rust-analyzer", "netcoredbg", "js-debug-adapter", "codelldb", "delve", "gopls", "clangd", "bash-language-server", "html-lsp", "css-lsp", "json-lsp", "yaml-language-server", "taplo", "marksman", "lemminx", "tinymist", "shfmt", "gofumpt", "clang-format", "shellcheck" })
 		require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 	end,
 }

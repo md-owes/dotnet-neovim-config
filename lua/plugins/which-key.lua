@@ -82,10 +82,7 @@ return { -- Useful plugin to show you pending keybinds.
 				"<leader>n",
 				group = "[N]eo-tree / Avante",
 			},
-			{
-				"<leader>z",
-				group = "AI ([Z] Gemini)",
-			},
+
 			{
 				"<leader>x",
 				group = "Diagnostics / Trouble",

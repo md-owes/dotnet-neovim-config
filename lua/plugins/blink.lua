@@ -2,10 +2,10 @@ return {
 	"saghen/blink.cmp",
 	dependencies = {
 		"rafamadriz/friendly-snippets",
-		"yetone/avante.nvim",
-		{ "saghen/blink.compat", lazy = true, version = "*" },
+		"avante-corp/avante.nvim",
+		{ "saghen/blink.compat", lazy = true, version = "1.*" },
 	},
-	version = "*",
+	version = "1.*",
 	opts = {
 		keymap = { preset = "default" },
 		appearance = {

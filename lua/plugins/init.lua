@@ -12,6 +12,9 @@ return {
         import = "plugins.lazydev",
     },
     {
+        import = "plugins.ecolog",
+    },
+    {
         import = "plugins.leap",
     },
     {
@@ -24,13 +27,20 @@ return {
         import = "plugins.blink",
     },
     {
+        import = "plugins.neotest",
+    },
+    {
         import = "plugins.noice",
     },
+
     {
         import = "plugins.nvim-lspconfig",
     },
     {
         import = "plugins.nvim-treesitter",
+    },
+    {
+        import = "plugins.render-markdown",
     },
     {
         import = "plugins.roslyn",
@@ -57,7 +67,7 @@ return {
         import = "plugins.workspace-diagnostics",
     },
     {
-        import = "plugins.rust-tools",
+        import = "plugins.rustaceanvim",
     },
     {
         import = "plugins.nvim-dap",

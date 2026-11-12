@@ -38,7 +38,8 @@ return {
 			enabled = true,
 		},
 		notifier = {
-			enabled = true,
+			-- Disabled: Noice routes vim.notify to nvim-notify.
+			enabled = false,
 		},
 		quickfile = {
 			enabled = true,
