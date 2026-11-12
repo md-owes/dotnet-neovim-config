@@ -64,7 +64,7 @@ return {
 							active = "lualine_a_normal", -- or define your own highlight group
 							inactive = "lualine_c_inactive",
 						},
-						fmt = function(name, context)
+						fmt = function(name)
 							local filename = vim.fn.fnamemodify(name, ":t") -- Just the filename
 							return filename ~= "" and filename or "[No Name]"
 						end,

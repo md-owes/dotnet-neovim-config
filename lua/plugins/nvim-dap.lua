@@ -11,7 +11,7 @@ return {
 		local dapui = require("dapui")
 
 		require("dapui").setup()
-		require("nvim-dap-virtual-text").setup()
+		require("nvim-dap-virtual-text").setup({})
 
 		-- .NET Configuration
 		dap.adapters.coreclr = {

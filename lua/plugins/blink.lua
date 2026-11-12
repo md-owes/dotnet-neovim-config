@@ -6,6 +6,9 @@ return {
 		{ "saghen/blink.compat", lazy = true, opts = {} },
 	},
 	build = function()
+		-- `pwait` is defined on the blink.lib.Task returned by build();
+		-- lua_ls cannot infer it, so suppress only this warning.
+		---@diagnostic disable-next-line: undefined-field
 		require("blink.cmp").build():pwait()
 	end,
 	opts = {
