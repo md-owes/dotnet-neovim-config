@@ -1,3 +1,73 @@
+--[[ ---------------------------------------------------------------------
+  lualine.nvim - statusline and tabline
+  Repo: nvim-lualine/lualine.nvim
+
+  WHAT IT IS
+    The statusline at the bottom of every window and the tabline at
+    the top. It shows the mode, Git branch and diff, filename, the
+    current LSP document-symbol breadcrumb (via trouble.nvim),
+    diagnostics, encoding / fileformat / filetype, cursor progress
+    and location, and renders the open tabs in the tabline.
+
+  WHY IT IS USEFUL
+    - Mode, branch, dirty diff and diagnostics are always visible,
+      without running a command or opening another plugin.
+    - The Trouble symbols component shows where you are inside a file
+      (class / function breadcrumb) in the statusline itself.
+    - The tabline matters in this config: files are set to open in
+      new tabs (see lua/plugins/snacks.lua), and lualine renders those
+      tabs by filename with active-tab highlighting.
+    - Inactive windows keep a minimal line (filename + location), so
+      the focused window is obvious at a glance.
+
+  HOW IT IS CONFIGURED HERE
+    - opts is a function that builds the options table, inserts the
+      Trouble component, and returns it.
+    - options: icons_enabled = vim.g.have_nerd_font, theme = 'auto',
+      powerline-style component and section separators, globalstatus
+      = false (per-window statuslines), refresh = 1000 ms for
+      statusline, tabline and winbar, disabled_filetypes empty.
+    - Active sections:
+        a: mode
+        b: branch, diff
+        c: Trouble symbols component (inserted first), then filename
+           with path = 1 (relative path)
+        x: diagnostics, encoding, fileformat, filetype
+        y: progress    z: location
+    - Inactive sections: only filename (path = 1) in c and location
+      in x; everything else is empty.
+    - Tabline: section c holds the 'tabs' component with mode = 4,
+      max_length = full editor width, use_mode_colors = true,
+      active tab coloured lualine_a_normal and inactive tabs
+      lualine_c_inactive; labels are formatted to just the file's
+      tail name, or '[No Name]' for unnamed tabs.
+    - winbar and inactive_winbar are empty (disabled).
+    - extensions: nvim-tree, toggleterm, lazy, trouble.
+    - Trouble component: trouble.statusline with mode =
+      'lsp_document_symbols', groups = {}, title = false, filter
+      range = true, format '{kind_icon}{symbol.name:Normal}',
+      hl_group 'lualine_c_normal', shown only when it has symbols.
+    - Depends on folke/trouble.nvim for that component (see
+      lua/plugins/trouble.lua); icons come from mini.icons mocking
+      nvim-web-devicons (see lua/plugins/mini.lua).
+
+  HOW TO INVOKE IT
+    - Nothing to invoke: it is always on. Open files / tabs, change
+      mode, attach an LSP or produce diagnostics and it updates.
+    - :LualineInfo and the plugin's :lua require'lualine' API exist
+      for debugging; no keymaps are bound to lualine in this config.
+
+  FEATURES
+    - Sections for mode, Git branch / diff and LSP diagnostics.
+    - LSP document-symbol breadcrumb via trouble.nvim statusline.
+    - Tabline rendering of Neovim tabs with mode colours and
+      filename-only labels.
+    - Distinct minimal inactive-window layout.
+    - Built-in extensions giving matching statuslines in lazy,
+      trouble and other special windows.
+---------------------------------------------------------------------]]
+
+
 return {
 	"nvim-lualine/lualine.nvim",
 	dependencies = { "folke/trouble.nvim" },

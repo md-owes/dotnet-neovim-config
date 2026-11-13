@@ -1,3 +1,60 @@
+--[[ ---------------------------------------------------------------------
+  conform.nvim - formatter runner (format on save + manual format)
+  Repo: stevearc/conform.nvim
+
+  WHAT IT IS
+    A lightweight formatter plugin. It runs external formatters (stylua,
+    prettierd, ruff, rustfmt and others) on the current buffer, either
+    automatically when you save or on demand. It does not format anything
+    itself - it finds the right formatter for the filetype and runs it,
+    falling back to the LSP formatter when no external tool is set.
+
+  WHY IT IS USEFUL
+    - Every file is formatted consistently on save, with no manual step.
+    - One place maps each language to its canonical formatter.
+    - LSP fallback means files still get formatted even if a formatter
+      binary is missing, except for languages where LSP formatting is
+      deliberately disabled (see below).
+    - Fast: format_on_save has a 500 ms timeout, so a slow formatter
+      never blocks saving for long.
+
+  HOW IT IS CONFIGURED HERE
+    - Lazy-loaded on BufWritePre; command :ConformInfo is also available.
+    - notify_on_error = false: formatter errors stay quiet.
+    - format_on_save: timeout_ms = 500, lsp_format = 'fallback', except
+      for C and C++ where lsp_format = 'never' (those languages have no
+      well-standardised style, so only clang-format is used).
+    - formatters_by_ft:
+        lua -> stylua
+        astro, javascript, javascriptreact, typescript, typescriptreact,
+          json, jsonc, yaml, html, css, markdown -> prettierd
+        csharp -> csharpier
+        python -> ruff_format, ruff_organize_imports
+        go -> gofumpt
+        c, cpp -> clang-format
+        sh, bash -> shfmt
+        toml -> taplo
+        rust -> rustfmt
+    - Commented examples show running several formatters sequentially
+      and 'stop_after_first' to use the first available formatter.
+    - The formatter binaries are installed via Mason - see the
+      ensure_installed list in lua/plugins/nvim-lspconfig.lua.
+
+  HOW TO INVOKE IT
+    - Automatic: just save with :w - the buffer is formatted first.
+    - Manual: <leader>cf formats the current buffer asynchronously,
+      with LSP fallback (desc: '[C]ode [F]ormat Buffer').
+    - :ConformInfo shows which formatters apply to the current buffer
+      and whether they are available.
+
+  FEATURES
+    - Per-filetype formatter lists, run in order.
+    - LSP format fallback ('fallback' / 'never' / 'prefer').
+    - Async formatting for the manual keymap, so Neovim stays responsive.
+    - :ConformInfo diagnostics for debugging missing formatters.
+---------------------------------------------------------------------]]
+
+
 return { -- Autoformat
 	"stevearc/conform.nvim",
 	event = { "BufWritePre" },
