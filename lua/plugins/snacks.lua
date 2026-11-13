@@ -82,6 +82,120 @@
 ---------------------------------------------------------------------]]
 
 
+-- Helpers for the `tab_unique` picker action, defined once at module
+-- level (not inside the lazy spec) so the action itself stays small,
+-- each helper has one job, and the logic is easy to test and change.
+-- Performance notes:
+-- * Open windows are scanned once per invocation and indexed by
+--   normalised path, instead of rescanning all tabs/windows for
+--   every selected item (was O(items * tabs * windows)).
+-- * Path normalisation (fs_realpath, a syscall) is memoised per
+--   invocation, so each distinct path is resolved only once.
+-- * The fast path uses win_findbuf(bufnr) instead of a full scan.
+
+local function is_normal_window(win)
+	return vim.api.nvim_win_get_config(win).relative == ""
+end
+
+local function normalize_path(path, cache)
+	local cached = cache[path]
+	if cached then
+		return cached
+	end
+	local normalized = vim.uv.fs_realpath(path) or vim.fn.fnamemodify(path, ":p")
+	cache[path] = normalized
+	return normalized
+end
+
+local function picker_item_path(item)
+	if item.file then
+		local path = Snacks.picker.util.path(item)
+		if path and path ~= "" then
+			return path
+		end
+	end
+	if item.buf and vim.api.nvim_buf_is_valid(item.buf) then
+		return vim.api.nvim_buf_get_name(item.buf)
+	end
+	return nil
+end
+
+-- Single O(tabs * windows) pass: normalised path -> { win, tab }.
+-- First window wins, so repeated paths keep a stable target.
+local function build_open_index(normalize)
+	local index = {}
+	for _, tab in ipairs(vim.api.nvim_list_tabpages()) do
+		for _, win in ipairs(vim.api.nvim_tabpage_list_wins(tab)) do
+			if is_normal_window(win) then
+				local name = vim.api.nvim_buf_get_name(vim.api.nvim_win_get_buf(win))
+				if name ~= "" then
+					local key = normalize(name)
+					if index[key] == nil then
+						index[key] = { win = win, tab = tab }
+					end
+				end
+			end
+		end
+	end
+	return index
+end
+
+-- Fast path first: windows showing the buffer (no full scan). Falls
+-- back to the prebuilt index, which also covers the same file opened
+-- under a different spelling / symlink of its path.
+local function find_open_location(item, target, index)
+	local bufnr = item.buf
+	if not bufnr or not vim.api.nvim_buf_is_valid(bufnr) then
+		bufnr = vim.fn.bufnr(target)
+	end
+	if bufnr and bufnr > 0 then
+		for _, win in ipairs(vim.fn.win_findbuf(bufnr)) do
+			if is_normal_window(win) then
+				return win, vim.api.nvim_win_get_tabpage(win)
+			end
+		end
+	end
+	local found = index[target]
+	if found then
+		return found.win, found.tab
+	end
+	return nil, nil
+end
+
+local function goto_location(win, tab, pos)
+	vim.api.nvim_set_current_tabpage(assert(tab))
+	vim.api.nvim_set_current_win(assert(win))
+	if pos and pos[1] and pos[1] > 0 then
+		pcall(vim.api.nvim_win_set_cursor, win, { pos[1], pos[2] or 0 })
+		vim.cmd("norm! zz")
+	end
+end
+
+local function is_reusable_empty_buffer(bufnr)
+	if vim.bo[bufnr].buftype ~= "" or vim.bo[bufnr].filetype ~= "" then
+		return false
+	end
+	if vim.api.nvim_buf_get_name(bufnr) ~= "" then
+		return false
+	end
+	if vim.api.nvim_buf_line_count(bufnr) ~= 1 then
+		return false
+	end
+	return vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)[1] == ""
+end
+
+local function open_new_tab(path, pos, reuse_current)
+	if reuse_current then
+		vim.cmd("edit " .. vim.fn.fnameescape(path))
+	else
+		vim.cmd("tabedit " .. vim.fn.fnameescape(path))
+	end
+	if pos and pos[1] and pos[1] > 0 then
+		pcall(vim.api.nvim_win_set_cursor, 0, { pos[1], pos[2] or 0 })
+		vim.cmd("norm! zz")
+	end
+end
+
 return {
 	"folke/snacks.nvim",
 	priority = 1000,
@@ -138,20 +252,7 @@ return {
 					if #items == 0 then
 						return
 					end
-					local function item_path(item)
-						local path = nil
-						if item.file then
-							path = Snacks.picker.util.path(item)
-						end
-						if (not path or path == "") and item.buf and vim.api.nvim_buf_is_valid(item.buf) then
-							path = vim.api.nvim_buf_get_name(item.buf)
-						end
-						return path
-					end
-					local function normalize(path)
-						return vim.uv.fs_realpath(path) or vim.fn.fnamemodify(path, ":p")
-					end
-					local first_path = item_path(items[1])
+					local first_path = picker_item_path(items[1])
 					-- Non-file items (help, keymaps, commands) and directories
 					-- have no tab to reuse: keep the built-in behaviour.
 					if not first_path or first_path == "" then
@@ -163,63 +264,24 @@ return {
 						return
 					end
 					picker:close()
+					-- One memoised normaliser and one index of open windows
+					-- for all selected items, instead of a full scan per item.
+					local path_cache = {}
+					local function normalize(path)
+						return normalize_path(path, path_cache)
+					end
+					local open_index = build_open_index(normalize)
 					for _, item in ipairs(items) do
-						local path = item_path(item)
+						local path = picker_item_path(item)
 						if path and path ~= "" and vim.fn.isdirectory(path) == 0 then
 							local target = normalize(path)
-							local found_win, found_tab = nil, nil
-							local bufnr = item.buf
-							if not bufnr or not vim.api.nvim_buf_is_valid(bufnr) then
-								bufnr = vim.fn.bufnr(path)
-							end
-							if bufnr and bufnr > 0 then
-								for _, w in ipairs(vim.fn.win_findbuf(bufnr)) do
-									if vim.api.nvim_win_get_config(w).relative == "" then
-										found_win = w
-										found_tab = vim.api.nvim_win_get_tabpage(w)
-										break
-									end
-								end
-							end
-							if not found_win then
-								for _, tab in ipairs(vim.api.nvim_list_tabpages()) do
-									for _, w in ipairs(vim.api.nvim_tabpage_list_wins(tab)) do
-										if vim.api.nvim_win_get_config(w).relative == "" then
-											local name = vim.api.nvim_buf_get_name(vim.api.nvim_win_get_buf(w))
-											if name ~= "" and normalize(name) == target then
-												found_win = w
-												found_tab = tab
-												break
-											end
-										end
-									end
-									if found_win then
-										break
-									end
-								end
-							end
+							local found_win, found_tab = find_open_location(item, target, open_index)
 							if found_win and found_tab then
-								vim.api.nvim_set_current_tabpage(assert(found_tab))
-								vim.api.nvim_set_current_win(found_win)
-								if item.pos and item.pos[1] and item.pos[1] > 0 then
-									pcall(vim.api.nvim_win_set_cursor, found_win, { item.pos[1], item.pos[2] or 0 })
-									vim.cmd("norm! zz")
-								end
+								goto_location(found_win, found_tab, item.pos)
 							else
 								local cur_buf = vim.api.nvim_get_current_buf()
-								local cur_empty = vim.bo[cur_buf].buftype == "" and vim.bo[cur_buf].filetype == "" and vim.api.nvim_buf_line_count(cur_buf) == 1 and vim.api.nvim_buf_get_lines(cur_buf, 0, -1, false)[1] == "" and vim.api.nvim_buf_get_name(cur_buf) == ""
-								local cur_tab_wins = #vim.tbl_filter(function(w)
-									return vim.api.nvim_win_get_config(w).relative == ""
-								end, vim.api.nvim_tabpage_list_wins(vim.api.nvim_get_current_tabpage()))
-								if cur_empty and cur_tab_wins == 1 then
-									vim.cmd("edit " .. vim.fn.fnameescape(path))
-								else
-									vim.cmd("tabedit " .. vim.fn.fnameescape(path))
-								end
-								if item.pos and item.pos[1] and item.pos[1] > 0 then
-									pcall(vim.api.nvim_win_set_cursor, 0, { item.pos[1], item.pos[2] or 0 })
-									vim.cmd("norm! zz")
-								end
+								local cur_tab_wins = #vim.tbl_filter(is_normal_window, vim.api.nvim_tabpage_list_wins(vim.api.nvim_get_current_tabpage()))
+								open_new_tab(path, item.pos, is_reusable_empty_buffer(cur_buf) and cur_tab_wins == 1)
 							end
 						end
 					end
